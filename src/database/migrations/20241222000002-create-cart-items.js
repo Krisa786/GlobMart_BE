@@ -92,24 +92,48 @@ module.exports = {
       }
     });
 
-    // Add indexes
-    await queryInterface.addIndex('cart_items', ['cart_id'], {
-      name: 'idx_cart_items_cart_id'
-    });
+    // Add indexes (only if they don't exist)
+    try {
+      await queryInterface.addIndex('cart_items', ['cart_id'], {
+        name: 'idx_cart_items_cart_id'
+      });
+    } catch (error) {
+      if (!error.message.includes('Duplicate key name')) {
+        throw error;
+      }
+    }
 
-    await queryInterface.addIndex('cart_items', ['product_id'], {
-      name: 'idx_cart_items_product_id'
-    });
+    try {
+      await queryInterface.addIndex('cart_items', ['product_id'], {
+        name: 'idx_cart_items_product_id'
+      });
+    } catch (error) {
+      if (!error.message.includes('Duplicate key name')) {
+        throw error;
+      }
+    }
 
-    await queryInterface.addIndex('cart_items', ['sku'], {
-      name: 'idx_cart_items_sku'
-    });
+    try {
+      await queryInterface.addIndex('cart_items', ['sku'], {
+        name: 'idx_cart_items_sku'
+      });
+    } catch (error) {
+      if (!error.message.includes('Duplicate key name')) {
+        throw error;
+      }
+    }
 
     // Add unique constraint for cart_id + sku combination
-    await queryInterface.addIndex('cart_items', ['cart_id', 'sku'], {
-      name: 'uniq_cart_sku',
-      unique: true
-    });
+    try {
+      await queryInterface.addIndex('cart_items', ['cart_id', 'sku'], {
+        name: 'uniq_cart_sku',
+        unique: true
+      });
+    } catch (error) {
+      if (!error.message.includes('Duplicate key name')) {
+        throw error;
+      }
+    }
   },
 
   async down(queryInterface, Sequelize) {
