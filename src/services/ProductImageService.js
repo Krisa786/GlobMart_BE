@@ -1,5 +1,5 @@
 const { ProductImage, Product } = require('../database/models');
-const s3Service = require('./S3Service');
+const bunnyCDNService = require('./BunnyCDNService');
 const { logger } = require('../middleware/errorHandler');
 const { Op } = require('sequelize');
 
@@ -70,12 +70,12 @@ class ProductImageService {
         },
       });
 
-      // Delete all variants from S3
-      const s3Keys = variants.map(variant => variant.s3_key);
-      const deleteResults = await s3Service.deleteFiles(s3Keys);
+      // Delete all variants from Bunny CDN
+      const bunnyKeys = variants.map(variant => variant.s3_key);
+      const deleteResults = await bunnyCDNService.deleteFiles(bunnyKeys);
 
       if (deleteResults.failed.length > 0) {
-        logger.warn('Some S3 deletions failed:', {
+        logger.warn('Some Bunny CDN deletions failed:', {
           failed: deleteResults.failed,
           productId,
           imageId,
@@ -278,9 +278,9 @@ class ProductImageService {
         };
       }
 
-      // Delete from S3
-      const s3Keys = orphanedImages.map(image => image.s3_key);
-      const deleteResults = await s3Service.deleteFiles(s3Keys);
+      // Delete from Bunny CDN
+      const bunnyKeys = orphanedImages.map(image => image.s3_key);
+      const deleteResults = await bunnyCDNService.deleteFiles(bunnyKeys);
 
       // Delete from database
       await ProductImage.destroy({

@@ -21,6 +21,7 @@ const cartRoutes = require('./routes/cart');
 const checkoutRoutes = require('./routes/checkout');
 const docsRoutes = require('./routes/docs');
 const openapiRoutes = require('./routes/openapi');
+const bunnyTestRoutes = require('./routes/bunnyTest');
 const db = require('./database/models');
 const { getCheckoutCleanupService } = require('./services/CheckoutCleanupService');
 const { getCheckoutCleanupFallback } = require('./services/CheckoutCleanupFallback');
@@ -77,6 +78,7 @@ app.use('/api/cart', rateLimiters.public, cartRoutes);
 app.use('/api/checkout', rateLimiters.public, checkoutRoutes);
 app.use('/api', rateLimiters.general, docsRoutes);
 app.use('/api', rateLimiters.general, openapiRoutes);
+app.use('/api/test', rateLimiters.general, bunnyTestRoutes);
 
 // Response audit middleware (after routes)
 app.use(auditResponseMiddleware);

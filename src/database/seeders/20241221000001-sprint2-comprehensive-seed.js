@@ -233,7 +233,7 @@ module.exports = {
         price: 32.99,
         currency: 'USD',
         status: 'published',
-        sustainability_badges: ['Organic Cotton', 'Fair Trade Certified', 'OEKO-TEX Standard 100'],
+        sustainability_badges: ['Organic', 'FairTrade'],
         meta: {
           material: '100% Egyptian Cotton',
           weight: '650 GSM',
@@ -254,7 +254,7 @@ module.exports = {
         price: 12.50,
         currency: 'USD',
         status: 'published',
-        sustainability_badges: ['Biodegradable', 'Sustainable Materials', 'Carbon Neutral'],
+        sustainability_badges: ['Biodegradable'],
         meta: {
           material: 'Bamboo Fiber',
           capacity: '50ml',
@@ -274,7 +274,7 @@ module.exports = {
         price: 55.00,
         currency: 'USD',
         status: 'published',
-        sustainability_badges: ['Organic Cotton', 'Water-Based Dyes'],
+        sustainability_badges: ['Organic'],
         meta: {
           material: '100% Cotton Terry',
           sizes: ['S', 'M', 'L', 'XL', 'XXL'],
@@ -296,7 +296,7 @@ module.exports = {
         price: 18.99,
         currency: 'USD',
         status: 'published',
-        sustainability_badges: ['Recyclable', 'Durable Design'],
+        sustainability_badges: ['Recycled'],
         meta: {
           material: '18/10 Stainless Steel',
           pieces: 24,
@@ -316,7 +316,7 @@ module.exports = {
         price: 24.75,
         currency: 'USD',
         status: 'published',
-        sustainability_badges: ['Lead-Free', 'Dishwasher Safe'],
+        sustainability_badges: [],
         meta: {
           material: 'Bone China',
           diameter: '10.5 inches',
@@ -338,7 +338,7 @@ module.exports = {
         price: 19.99,
         currency: 'USD',
         status: 'published',
-        sustainability_badges: ['Plant-Based', 'Biodegradable', 'Non-Toxic', 'Vegan'],
+        sustainability_badges: ['Biodegradable'],
         meta: {
           volume: '1 Gallon',
           ph_level: '7.0',
@@ -359,7 +359,7 @@ module.exports = {
         price: 14.99,
         currency: 'USD',
         status: 'published',
-        sustainability_badges: ['Reusable', 'Long-Lasting'],
+        sustainability_badges: [],
         meta: {
           material: 'Premium Microfiber',
           pack_size: 12,
@@ -381,7 +381,7 @@ module.exports = {
         price: 42.50,
         currency: 'USD',
         status: 'published',
-        sustainability_badges: ['BPA-Free', 'Energy Efficient'],
+        sustainability_badges: ['BPA-Free', 'Energy-Efficient'],
         meta: {
           accuracy: '±0.1°C',
           reading_time: '8 seconds',
@@ -402,7 +402,7 @@ module.exports = {
         price: 125.99,
         currency: 'USD',
         status: 'published',
-        sustainability_badges: ['Energy Efficient', 'Long Battery Life'],
+        sustainability_badges: ['Energy-Efficient'],
         meta: {
           cuff_size: '22-42 cm',
           memory: '99 readings',
@@ -425,7 +425,7 @@ module.exports = {
         price: 8.99,
         currency: 'USD',
         status: 'published',
-        sustainability_badges: ['Non-Toxic', 'Alcohol-Based'],
+        sustainability_badges: [],
         meta: {
           alcohol_content: '70%',
           volume: '8 fl oz',
@@ -446,7 +446,7 @@ module.exports = {
         price: 15.50,
         currency: 'USD',
         status: 'published',
-        sustainability_badges: ['Natural Ingredients', 'Cruelty-Free', 'Vegan'],
+        sustainability_badges: ['Organic'],
         meta: {
           volume: '4 fl oz',
           ingredients: 'Natural with Vitamin E',
@@ -469,7 +469,7 @@ module.exports = {
         price: 28.99,
         currency: 'USD',
         status: 'published',
-        sustainability_badges: ['Organic', 'Pure Essential Oil'],
+        sustainability_badges: ['Organic'],
         meta: {
           volume: '2 fl oz',
           purity: '100% Pure',
@@ -490,7 +490,7 @@ module.exports = {
         price: 35.00,
         currency: 'USD',
         status: 'published',
-        sustainability_badges: ['Natural Minerals', 'Cruelty-Free'],
+        sustainability_badges: [],
         meta: {
           volume: '8 oz',
           ingredients: 'Dead Sea Salt, Essential Oils',
@@ -512,7 +512,7 @@ module.exports = {
         price: 22.99,
         currency: 'USD',
         status: 'published',
-        sustainability_badges: ['Pure Essential Oil', 'Natural'],
+        sustainability_badges: ['Organic'],
         meta: {
           volume: '1 fl oz',
           purity: '100% Pure',
@@ -534,7 +534,7 @@ module.exports = {
         price: 45.99,
         currency: 'USD',
         status: 'published',
-        sustainability_badges: ['Natural Materials', 'Handcrafted'],
+        sustainability_badges: [],
         meta: {
           material: 'Organic Cotton, Buckwheat Hulls',
           dimensions: '18" x 18" x 4"',

@@ -40,6 +40,27 @@ const SUSTAINABILITY_BADGES = {
     name: 'BPA-Free',
     description: 'BPA-Free certified',
     category: 'health'
+  },
+  
+  // Biodegradable materials
+  Biodegradable: {
+    name: 'Biodegradable',
+    description: 'Biodegradable materials',
+    category: 'materials'
+  },
+  
+  // Energy efficient products
+  'Energy-Efficient': {
+    name: 'Energy-Efficient',
+    description: 'Energy efficient design',
+    category: 'efficiency'
+  },
+  
+  // Water saving products
+  'Water-Saving': {
+    name: 'Water-Saving',
+    description: 'Water saving technology',
+    category: 'efficiency'
   }
 };
 

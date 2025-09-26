@@ -417,9 +417,21 @@ class ProductService {
     }
 
     if (sustainabilityBadges && Array.isArray(sustainabilityBadges)) {
-      whereClause.sustainability_badges = {
-        [Op.overlap]: sustainabilityBadges
-      };
+      // For MySQL, use JSON_CONTAINS to check if any of the badges exist in the JSON array
+      const badgeConditions = sustainabilityBadges.map(badge => 
+        require('sequelize').literal(`JSON_CONTAINS(sustainability_badges, '"${badge}"')`)
+      );
+      
+      // Combine with existing OR conditions if they exist
+      if (whereClause[Op.or]) {
+        whereClause[Op.and] = [
+          { [Op.or]: whereClause[Op.or] },
+          { [Op.or]: badgeConditions }
+        ];
+        delete whereClause[Op.or];
+      } else {
+        whereClause[Op.or] = badgeConditions;
+      }
     }
 
     const offset = (page - 1) * limit;

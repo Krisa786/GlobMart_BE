@@ -19,16 +19,17 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     /**
-     * Get the full S3 URL
+     * Get the full CDN URL
      */
     getFullS3Url() {
       if (this.s3_key) {
-        // Assuming S3 bucket URL structure
-        const bucketUrl = process.env.S3_BUCKET_URL || 'https://your-bucket.s3.amazonaws.com';
-        return `${bucketUrl}/${this.s3_key}`;
+        // Using Bunny CDN URL structure
+        const bunnyCDNUrl = process.env.STORAGE_SERVER_BASE_URL || 'https://prestious.b-cdn.net';
+        return `${bunnyCDNUrl}/${this.s3_key}`;
       }
       return this.url;
     }
+
 
     /**
      * Get image dimensions as string
@@ -201,6 +202,48 @@ module.exports = (sequelize, DataTypes) => {
     paranoid: false,
     createdAt: 'created_at',
     updatedAt: false, // No updated_at column in product_images table
+    getterMethods: {
+      cdn_url() {
+        // If the URL is already a valid external URL (like placeholder), use it directly
+        if (this.url && (this.url.startsWith('http://') || this.url.startsWith('https://'))) {
+          // Check if it's a placeholder URL or other external service
+          if (this.url.includes('via.placeholder.com') || 
+              this.url.includes('placeholder.com') ||
+              this.url.includes('picsum.photos') ||
+              this.url.includes('unsplash.com') ||
+              this.url.includes('loremflickr.com')) {
+            return this.url;
+          }
+          
+          // Check if it's already a Bunny CDN URL
+          if (this.url.includes('b-cdn.net') || this.url.includes('bunnycdn.com')) {
+            return this.url;
+          }
+        }
+        
+        // For s3_key based URLs, convert to Bunny CDN
+        if (this.s3_key) {
+          const bunnyCDNUrl = process.env.STORAGE_SERVER_BASE_URL || 'https://prestious.b-cdn.net';
+          
+          // If s3_key contains a full URL, extract just the path
+          let imagePath = this.s3_key;
+          if (this.s3_key.includes('amazonaws.com/')) {
+            // Extract path from S3 URL
+            const urlParts = this.s3_key.split('amazonaws.com/');
+            if (urlParts.length > 1) {
+              imagePath = urlParts[1];
+            }
+          } else if (this.s3_key.includes('s3://')) {
+            // Handle S3 protocol URLs
+            imagePath = this.s3_key.replace('s3://', '').split('/').slice(1).join('/');
+          }
+          
+          return `${bunnyCDNUrl}/${imagePath}`;
+        }
+        
+        return this.url;
+      }
+    },
     indexes: [
       {
         fields: ['product_id', 'position']

@@ -1,5 +1,5 @@
 const { ProductImage, Product } = require('../database/models');
-const s3Service = require('../services/S3Service');
+const bunnyCDNService = require('../services/BunnyCDNService');
 const imageProcessingService = require('../services/ImageProcessingService');
 const { logger } = require('../middleware/errorHandler');
 const { Op } = require('sequelize');
@@ -131,14 +131,14 @@ class ProductImageController {
       const currentPosition = (maxPosition || -1) + 1;
 
       // Upload original image
-      const originalKey = s3Service.generateProductImageKey(
+      const originalKey = bunnyCDNService.generateProductImageKey(
         productId,
         'original',
         imageProcessingService.getBestOutputFormat(file.mimetype),
         file.originalname
       );
 
-      const originalUpload = await s3Service.uploadFile(
+      const originalUpload = await bunnyCDNService.uploadFile(
         processedImages.original.buffer,
         originalKey,
         processedImages.original.metadata.format === 'jpeg' ? 'image/jpeg' :
@@ -171,14 +171,14 @@ class ProductImageController {
       // Upload size variants
       for (const [sizeName, variant] of Object.entries(processedImages.variants)) {
         try {
-          const variantKey = s3Service.generateProductImageKey(
+          const variantKey = bunnyCDNService.generateProductImageKey(
             productId,
             sizeName,
             variant.metadata.format,
             file.originalname
           );
 
-          const variantUpload = await s3Service.uploadFile(
+          const variantUpload = await bunnyCDNService.uploadFile(
             variant.buffer,
             variantKey,
             variant.metadata.format === 'jpeg' ? 'image/jpeg' :
@@ -315,12 +315,12 @@ class ProductImageController {
         });
       }
 
-      // Delete from S3
+      // Delete from Bunny CDN
       try {
-        await s3Service.deleteFile(image.s3_key);
-      } catch (s3Error) {
-        logger.warn('Failed to delete image from S3:', {
-          error: s3Error.message,
+        await bunnyCDNService.deleteFile(image.s3_key);
+      } catch (bunnyError) {
+        logger.warn('Failed to delete image from Bunny CDN:', {
+          error: bunnyError.message,
           s3Key: image.s3_key,
           imageId,
           requestId: req.requestId,

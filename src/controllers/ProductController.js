@@ -256,6 +256,7 @@ class ProductController {
         minPrice,
         maxPrice,
         badge,
+        inStock,
         sort = 'newest',
         page = 1,
         limit = 20
@@ -273,6 +274,23 @@ class ProductController {
       const sortBy = sortMap[sort] || 'created_at';
       const sortOrder = sort === 'oldest' ? 'ASC' : 'DESC';
 
+      // Parse inStock parameter
+      let inStockFilter = null;
+      if (inStock !== undefined) {
+        if (typeof inStock === 'string') {
+          inStockFilter = inStock === '1' || inStock === 'true';
+        } else {
+          inStockFilter = Boolean(inStock);
+        }
+      }
+
+      // Parse sustainability badges - handle comma-separated values
+      let sustainabilityBadges = null;
+      if (badge) {
+        // Split comma-separated badges and filter out empty strings
+        sustainabilityBadges = badge.split(',').filter(b => b.trim().length > 0);
+      }
+
       // Build search options
       const searchOptions = {
         page: parseInt(page),
@@ -282,7 +300,8 @@ class ProductController {
         categoryId: category ? parseInt(category) : null,
         minPrice: minPrice ? parseFloat(minPrice) : null,
         maxPrice: maxPrice ? parseFloat(maxPrice) : null,
-        sustainabilityBadges: badge ? [badge] : null
+        sustainabilityBadges,
+        inStock: inStockFilter
       };
 
       const result = await ProductService.searchProducts(q, searchOptions);
